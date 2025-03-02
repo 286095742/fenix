@@ -7,9 +7,8 @@ on:
 
 env:
   REPO_URL: https://github.com/286095742/fenix.git
-  REPO_BRANCH: kernel-6.12
+  REPO_BRANCH: master
   CONFIG_FILE: configs/ipq60xx-6.12-wifi.config
-  DIY_SCRIPT: diy-script.sh
   CLASH_KERNEL: amd64
   CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: false
@@ -86,6 +85,10 @@ jobs:
         source env/setenv.sh -q -s  KHADAS_BOARD=VIM1S LINUX=5.15 UBOOT=2019.01 DISTRIBUTION=Debian DISTRIB_RELEASE=bookworm DISTRIB_RELEASE_VERSION=12 DISTRIB_TYPE=server DISTRIB_ARCH=arm64 INSTALL_TYPE=EMMC COMPRESS_IMAGE=no
         make -j$(nproc) || make -j1 || make -j1 V=s
         ls -lh
+        cd build
+        ls -lh
+        cd bin
+        ls -lh
         echo "status=success" >> $GITHUB_OUTPUT
         echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
@@ -99,25 +102,15 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: ${{ env.SOURCE_REPO }}-bin-${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}-${{ env.FILE_DATE }}
-        path: ${{ env.FENIX_PATH }}/bin
+        path: ${{ env.FENIX_PATH }}/build/bin
 
     - name: Organize Files(整理文件)
       if: steps.compile.outputs.status == 'success'
       run: |
-        cd $FENIX_PATH/bin/targets/*/*
+        cd $FENIX_PATH/build/bin/
         cat sha256sums
         cp $FENIX_PATH/.config build.config
-        mv -f $FENIX_PATH/bin/packages/*/*/*.ipk packages
-        tar -zcf Packages.tar.gz packages
-        rm -rf packages feeds.buildinfo version.buildinfo
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
-
-    - name: Upload Firmware To Artifact(将固件上传到Artifact)
-      if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE != 'true'
-      uses: actions/upload-artifact@main
-      with:
-        name: ${{ env.SOURCE_REPO }}-firmware-${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}-${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE_PATH }}
 
     - name: Upload Firmware To Release(发布固件)
       if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE == 'true'
