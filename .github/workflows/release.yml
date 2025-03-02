@@ -102,13 +102,15 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: ${{ env.SOURCE_REPO }}-bin-${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}-${{ env.FILE_DATE }}
-        path: ${{ env.FENIX_PATH }}/build/bin
+        path: ${{ env.FENIX_PATH }}/build/images
 
     - name: Organize Files(整理文件)
       if: steps.compile.outputs.status == 'success'
       run: |
         cd $FENIX_PATH/build/images
         tar -zcf downloads.tar.gz $FENIX_PATH/downloads
+        tar -zcf fireware.tar.gz $FENIX_PATH/build/images
+        rm *.img
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
 
     - name: Upload Firmware To Release(发布固件)
