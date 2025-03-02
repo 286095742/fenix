@@ -69,8 +69,8 @@ broken_(){
 }
 prepare_host() {
 
-	if [[ $(dpkg --print-architecture) != "amd64" ]]; then
-		error_msg "Your build host architecture is not supported,please use a 'x86-x64' build host."
+	if [[ $(dpkg --print-architecture) != "arm64" ]]; then
+		error_msg "Your build host architecture is not supported,please use a 'arm64' build host."
 		return -1
 	fi
 
@@ -109,7 +109,6 @@ prepare_host() {
 		esac
 	}
 
-	grep -q i386 <(dpkg --print-foreign-architectures) || (warning_msg "Requires root privileges, please enter your passowrd!" && sudo dpkg --add-architecture i386)
 	if systemd-detect-virt -q -c; then
 		info_msg "Running in container: $(systemd-detect-virt)"
 		# disable apt-cacher unless NO_APT_CACHER=no is not specified explicitly
@@ -144,8 +143,8 @@ prepare_host() {
 			parted pkg-config whiptail debian-keyring debian-archive-keyring f2fs-tools libfile-fcntllock-perl rsync libssl-dev \
 			nfs-kernel-server btrfs-progs ncurses-term p7zip-full kmod dosfstools libc6-dev-armhf-cross libgnutls28-dev \
 			curl patchutils liblz4-tool linux-base swig aptly acl \
-			locales ncurses-base pixz dialog systemd-container udev lib32stdc++6 libc6-i386 lib32ncurses5 lib32tinfo5 \
-			bison libbison-dev flex libfl-dev lib32z1 libglib2.0-dev xxd debhelper libelf-dev python3-setuptools python3-dev python3-pyelftools \
+			locales ncurses-base pixz dialog systemd-container udev libc6 \
+			bison libbison-dev flex libfl-dev libglib2.0-dev xxd debhelper libelf-dev python3-setuptools python3-dev python3-pyelftools \
 			gcc-aarch64-linux-gnu"
 
 	# new fs tools + compression
@@ -205,8 +204,8 @@ prepare_host() {
 				}
 	}
 
-	test -e /proc/sys/fs/binfmt_misc/qemu-arm || $sudo update-binfmts --enable qemu-arm
-	test -e /proc/sys/fs/binfmt_misc/qemu-aarch64 || $sudo update-binfmts --enable qemu-aarch64
+	test -e /usr/bin/qemu-arm || $sudo update-binfmts --enable qemu-arm
+	test -e /usr/bin/qemu-aarch64 || $sudo update-binfmts --enable qemu-aarch64
 
 	# Looking into qemu source code it seems cortex-a53 and cortex-57 are accelerated via KVM.
 	# IIUC other seems to be emulated using CPU. Also cortex-a53 seems to be faster than cortex-a57
