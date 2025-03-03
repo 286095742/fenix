@@ -109,7 +109,8 @@ jobs:
       run: |
         cd $FENIX_PATH/build/bin
         tar -zcf downloads.tar.gz $FENIX_PATH/downloads
-        tar -zcf fireware.tar.gz $FENIX_PATH/build/images
+        # tar -zcf fireware.tar.gz $FENIX_PATH/build/images
+        tar -zcf - $FENIX_PATH/build/images |split -b 2000m - fireware.tar.gz
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
 
     - name: Upload Firmware To Release(发布固件)
