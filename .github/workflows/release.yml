@@ -107,10 +107,9 @@ jobs:
     - name: Organize Files(整理文件)
       if: steps.compile.outputs.status == 'success'
       run: |
-        cd $FENIX_PATH/build/images
+        cd $FENIX_PATH/build/bin
         tar -zcf downloads.tar.gz $FENIX_PATH/downloads
         tar -zcf fireware.tar.gz $FENIX_PATH/build/images
-        rm *.img
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
 
     - name: Upload Firmware To Release(发布固件)
