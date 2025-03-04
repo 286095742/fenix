@@ -84,8 +84,8 @@ jobs:
         echo -e "$(nproc) thread compile"
         # source env/setenv.sh -q -s  KHADAS_BOARD=VIM1S LINUX=5.15 UBOOT=2019.01 DISTRIBUTION=Debian DISTRIB_RELEASE=bookworm DISTRIB_RELEASE_VERSION=12 DISTRIB_TYPE=server DISTRIB_ARCH=arm64 INSTALL_TYPE=EMMC COMPRESS_IMAGE=no
         # source env/setenv.sh -q -s  KHADAS_BOARD=VIM1 LINUX=mainline UBOOT=mainline DISTRIBUTION=Ubuntu DISTRIB_RELEASE=focal DISTRIB_RELEASE_VERSION=20.04 DISTRIB_TYPE=gnome DISTRIB_ARCH=arm64 INSTALL_TYPE=SD-USB COMPRESS_IMAGE=no
-        source env/setenv.sh -q -s  KHADAS_BOARD=VIM1 LINUX=4.9 UBOOT=2015.01 DISTRIBUTION=Ubuntu DISTRIB_RELEASE=focal DISTRIB_RELEASE_VERSION=20.04 DISTRIB_TYPE=gnome DISTRIB_ARCH=arm64 INSTALL_TYPE=EMMC COMPRESS_IMAGE=yes CFLAGS="-Wno-error"
-        make -j$(nproc) || make -j1 || make -j1 V=s
+        source env/setenv.sh -q -s  KHADAS_BOARD=VIM1 LINUX=4.9 UBOOT=2015.01 DISTRIBUTION=Ubuntu DISTRIB_RELEASE=focal DISTRIB_RELEASE_VERSION=20.04 DISTRIB_TYPE=gnome DISTRIB_ARCH=arm64 INSTALL_TYPE=EMMC COMPRESS_IMAGE=yes
+        make  CFLAGS="-Wno-error" -j$(nproc) || make  CFLAGS="-Wno-error" -j1 || make  CFLAGS="-Wno-error" -j1 V=s
         ls -lh
         cd build
         ls -lh
