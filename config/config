@@ -102,7 +102,7 @@ PREINSTALL_SNAP_PACKAGES_VALUES="no | yes"
 [[ -z $PREINSTALL_SNAP_PACKAGES ]] && PREINSTALL_SNAP_PACKAGES=no
 
 
-GITHUB_URL="https://github.com"
+GITHUB_URL="https://ghproxy.net/https://github.com"
 FENIX_BRANCH="master"
 [[ "$CLONE_FULL_COMMIT_LOG" == "no" ]] && GIT_CLONE_OPTIONS="--depth=1"
 
@@ -382,9 +382,9 @@ ROOTFS_CACHE_URL="http://build.khadas.com/khadas/fenix/cache/rootfs"
 PACKAGES_URL="http://build.khadas.com/khadas/fenix/packages"
 
 ## U-boot & Linux GitHub URL
-LINUX_SOURCE_URL="${LINUX_SOURCE_URL:-https://github.com/khadas/linux}"
-LINUX_COMMON_DRIVERS_SOURCE_URL="${LINUX_COMMON_DRIVERS_SOURCE_URL:-https://github.com/khadas/common_drivers}"
-UBOOT_SOURCE_URL="${UBOOT_SOURCE_URL:-https://github.com/khadas/u-boot}"
+LINUX_SOURCE_URL="${LINUX_SOURCE_URL:-https://ghproxy.net/https://github.com/khadas/linux}"
+LINUX_COMMON_DRIVERS_SOURCE_URL="${LINUX_COMMON_DRIVERS_SOURCE_URL:-https://ghproxy.net/https://github.com/khadas/common_drivers}"
+UBOOT_SOURCE_URL="${UBOOT_SOURCE_URL:-https://ghproxy.net/https://github.com/khadas/u-boot}"
 
 if [[ $DOWNLOAD_MIRROR == china ]] ; then
 	DEBIAN_MIRROR='mirrors.tuna.tsinghua.edu.cn/debian'
