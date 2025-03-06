@@ -115,7 +115,7 @@ jobs:
         # tar -zcf fireware.tar.gz $FENIX_PATH/build/images
         tar -zcf - $FENIX_PATH/build/images |split -b 2000m - fireware.tar.gz
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
-        echo "build_tag=${{ env.FIRMWARE_TAG }}-R${{ env.DATE }}" >> $GITHUB_ENV
+        echo "build_tag=${{ env.FIRMWARE_TAG }}_R${{ env.DATE }}" >> $GITHUB_ENV
 
 
     - name: Upload Firmware To Release(发布固件)
