@@ -82,9 +82,6 @@ jobs:
       run: |
         cd $FENIX_PATH
         echo -e "$(nproc) thread compile"
-        #        source env/setenv.sh -q -s  KHADAS_BOARD=VIM1S LINUX=5.15 UBOOT=2019.01 DISTRIBUTION=Ubuntu \
-        #    DISTRIB_RELEASE=jammy DISTRIB_RELEASE_VERSION=22.04 DISTRIB_TYPE=gnome DISTRIB_ARCH=arm64 \
-        #    INSTALL_TYPE=EMMC COMPRESS_IMAGE=yes
         source env/setenv.sh -q -s  KHADAS_BOARD=M401A LINUX=5.15 UBOOT=2019.01 DISTRIBUTION=Ubuntu \
             DISTRIB_RELEASE=jammy DISTRIB_RELEASE_VERSION=22.04 DISTRIB_TYPE=gnome DISTRIB_ARCH=arm64 \
             INSTALL_TYPE=EMMC COMPRESS_IMAGE=yes
